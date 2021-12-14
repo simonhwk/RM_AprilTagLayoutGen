@@ -8,7 +8,6 @@ import sys
 import os
 import argparse
 from reportlab.lib import colors
-from reportlab.lib.utils import ImageReader
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen.canvas import Canvas
 from reportlab.platypus import Table, TableStyle, Image
@@ -40,6 +39,14 @@ def main(argv):
     im_list1 = []
     num_list1 = []
     tag_data1 = []
+    
+    xoffset = 20
+    yoffset = 200
+    
+    colW = 55
+    rowH = 50
+    
+    
     
     for i in linklist:
         #Clear im_list0, num_list0, and tag_data0
@@ -78,7 +85,7 @@ def main(argv):
         tag_data1.append(num_list1)
         
         #Format strip 1
-        table0 = Table(tag_data0, colWidths = 55, rowHeights = 50)
+        table0 = Table(tag_data0, colWidths = colW, rowHeights = rowH)
         table0.setStyle(TableStyle([
             ('ALIGN', (0, 0), (-1, -1), 'CENTER'),                      #Horizontal center aligns all entities
             ('VALIGN', (0, 0), (-1, 0), 'CENTER'),                      #Vertical center aligns AprilTags
@@ -87,10 +94,10 @@ def main(argv):
             ('BOX', (0, 0), (-1, -1), 0.25, colors.black)
             ]))
         table0.wrapOn(canvas, 0, 0)
-        table0.drawOn(canvas, 20, 210 * i + 30)
+        table0.drawOn(canvas, xoffset, 210 * i + 30)
         
         #Format strip 2
-        table1 = Table(tag_data1, colWidths = 55, rowHeights = 50)
+        table1 = Table(tag_data1, colWidths = colW, rowHeights = rowH)
         table1.setStyle(TableStyle([
             ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
             ('VALIGN', (0, 0), (-1, 0), 'CENTER'), 
@@ -100,10 +107,10 @@ def main(argv):
             ('BOX', (0, 0), (-1, -1), 0.25, colors.black)
             ]))
         table1.wrapOn(canvas, 0, 0)
-        table1.drawOn(canvas, 20, 210 * i + 135)
+        table1.drawOn(canvas, xoffset, 210 * i + 100 + 30 + 5)
         
-        canvas.rect(350, 210 * i + 30, 55, 100)
-        canvas.rect(350, 210 * i + 135, 55, 100)
+        canvas.rect(350, 210 * i + 30, colW, 2 * rowH)
+        canvas.rect(350, 210 * i + 100 + 30 + 5, colW, 2 * rowH)
             
     canvas.showPage()
     canvas.save()
