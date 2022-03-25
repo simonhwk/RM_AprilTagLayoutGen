@@ -3,12 +3,13 @@
 Created on Tue Nov  9 22:19:31 2021
 
 @author: rkasumi87
+@RevisedBy: GitWyd
 """
 import sys
 import os
 import argparse
 from reportlab.lib import colors
-from reportlab.lib.pagesizes import A4
+from reportlab.lib.pagesizes import A4, LETTER
 from reportlab.pdfgen.canvas import Canvas
 from reportlab.platypus import Table, TableStyle, Image
 from reportlab.lib.units import cm
@@ -30,7 +31,7 @@ def main(argv):
     
     #print(image_list[:20])
     
-    canvas = Canvas('tags.pdf', pagesize = A4, bottomup=0)
+    canvas = Canvas('tags.pdf', pagesize = LETTER, bottomup=0)
     
     im_list0 = []
     num_list0 = []
@@ -47,7 +48,7 @@ def main(argv):
     rowH = 50
     
     
-    
+    tag_counter = 0
     for i in linklist:
         #Clear im_list0, num_list0, and tag_data0
         im_list0.clear()
@@ -58,7 +59,7 @@ def main(argv):
         im_list1.clear()
         num_list1.clear()
         tag_data1.clear()
-        for a in range(12 * (i), 12 * i + 6):
+        for a in range(12 * i, 12 * i + 6):
             
             #Create list of images and numbers for first strip
             im0 = Image(os.path.join(tagfolder, image_list[a]))
@@ -94,7 +95,7 @@ def main(argv):
             ('BOX', (0, 0), (-1, -1), 0.25, colors.black)
             ]))
         table0.wrapOn(canvas, 0, 0)
-        table0.drawOn(canvas, xoffset, 210 * i + 30)
+        table0.drawOn(canvas, xoffset, 210 * tag_counter + 30)
         
         #Format strip 2
         table1 = Table(tag_data1, colWidths = colW, rowHeights = rowH)
@@ -107,12 +108,14 @@ def main(argv):
             ('BOX', (0, 0), (-1, -1), 0.25, colors.black)
             ]))
         table1.wrapOn(canvas, 0, 0)
-        table1.drawOn(canvas, xoffset, 210 * i + 100 + 30 + 5)
+        table1.drawOn(canvas, xoffset, 210 * tag_counter + 100 + 30 + 5)
         
-        canvas.rect(350, 210 * i + 30, colW, 2 * rowH)
-        canvas.rect(350, 210 * i + 100 + 30 + 5, colW, 2 * rowH)
-            
-    canvas.showPage()
+        canvas.rect(350, 210 * tag_counter + 30, colW, 2 * rowH)
+        canvas.rect(350, 210 * tag_counter + 100 + 30 + 5, colW, 2 * rowH)
+        tag_counter += 1
+        if tag_counter and tag_counter%3 == 0:  
+            canvas.showPage()
+            tag_counter = 0
     canvas.save()
     print("Successfully generated tags!")
      
