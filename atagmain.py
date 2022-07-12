@@ -3,7 +3,7 @@
 Created on Tue Nov  9 22:19:31 2021
 
 @author: rkasumi87
-@RevisedBy: GitWyd
+@RevisedBy: GitWyd, quinnbooth
 """
 import sys
 import os
@@ -45,8 +45,13 @@ def main(argv):
     yoffset = 200
     
     colW = 55
-    rowH = 50
+    rowH = 55
     
+    ######## CHANGE THIS TO ALTER TAG SCALE ########
+    
+    tagScale = 1.5
+    
+    ################################################
     
     tag_counter = 0
     for i in linklist:
@@ -63,16 +68,16 @@ def main(argv):
             
             #Create list of images and numbers for first strip
             im0 = Image(os.path.join(tagfolder, image_list[a]))
-            im0.drawHeight = 2 * cm
-            im0.drawWidth = 2 * cm
+            im0.drawHeight = tagScale * cm
+            im0.drawWidth = tagScale * cm
             im_list0.append(im0)
             
             num_list0.append(str(a))
             
             #Create list of images and numbers for second strip
             im1 = Image(os.path.join(tagfolder, image_list[a + 6]))
-            im1.drawHeight = 2 * cm
-            im1.drawWidth = 2 * cm
+            im1.drawHeight = tagScale * cm
+            im1.drawWidth = tagScale * cm
             im_list1.append(im1)
             
             num_list1.append(str(a + 6))
@@ -95,7 +100,7 @@ def main(argv):
             ('BOX', (0, 0), (-1, -1), 0.25, colors.black)
             ]))
         table0.wrapOn(canvas, 0, 0)
-        table0.drawOn(canvas, xoffset, 210 * tag_counter + 30)
+        table0.drawOn(canvas, xoffset, 230 * tag_counter + 30)
         
         #Format strip 2
         table1 = Table(tag_data1, colWidths = colW, rowHeights = rowH)
@@ -108,10 +113,10 @@ def main(argv):
             ('BOX', (0, 0), (-1, -1), 0.25, colors.black)
             ]))
         table1.wrapOn(canvas, 0, 0)
-        table1.drawOn(canvas, xoffset, 210 * tag_counter + 100 + 30 + 5)
+        table1.drawOn(canvas, xoffset, 230 * tag_counter + 100 + 30 + 15)
         
-        canvas.rect(350, 210 * tag_counter + 30, colW, 2 * rowH)
-        canvas.rect(350, 210 * tag_counter + 100 + 30 + 5, colW, 2 * rowH)
+        canvas.rect(350, 230 * tag_counter + 30, colW, 2 * rowH)
+        canvas.rect(350, 230 * tag_counter + 100 + 30 + 15, colW, 2 * rowH)
         tag_counter += 1
         if tag_counter and tag_counter%3 == 0:  
             canvas.showPage()

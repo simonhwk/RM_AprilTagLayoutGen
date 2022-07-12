@@ -31,7 +31,11 @@ pip install reportlab==3.2.0
 
 ## Running the Script
 
-The script is run using:
+Run the following:
+
+./maketags.sh <list of link numbers>
+
+Alternatively, the script is run using:
 
 python atagmain.py -i <input file> -l <list of link numbers>
 
