@@ -49,10 +49,22 @@ def main(argv):
     
     ######## CHANGE THIS TO ALTER TAG SCALE ########
     
-    tagScale = 1.5
+    tagScale = -1 # Universal (uniform) scaling. Set it to any negative integer to size each tag independently below.
+    
+    firstStripScales = [1, 1.5, 1.8, 1, 1.5, 1.8]
+    secondStripScales = [1.8, 1.5, 1, 1.8, 1.5, 1]
     
     ################################################
     
+    # Check if user wants uniform or independent scale factors
+    if (tagScale >= 0):
+        firstStripScales = []
+        secondStripScales = []
+        for i in range(6):
+            firstStripScales.append(tagScale)
+            secondStripScales.append(tagScale)
+    
+    # Generate output PDF
     tag_counter = 0
     for i in linklist:
         #Clear im_list0, num_list0, and tag_data0
@@ -65,19 +77,18 @@ def main(argv):
         num_list1.clear()
         tag_data1.clear()
         for a in range(12 * i, 12 * i + 6):
-            
             #Create list of images and numbers for first strip
             im0 = Image(os.path.join(tagfolder, image_list[a]))
-            im0.drawHeight = tagScale * cm
-            im0.drawWidth = tagScale * cm
+            im0.drawHeight = firstStripScales[a % 12] * cm
+            im0.drawWidth = firstStripScales[a % 12] * cm
             im_list0.append(im0)
             
             num_list0.append(str(a))
             
             #Create list of images and numbers for second strip
             im1 = Image(os.path.join(tagfolder, image_list[a + 6]))
-            im1.drawHeight = tagScale * cm
-            im1.drawWidth = tagScale * cm
+            im1.drawHeight = secondStripScales[a % 12] * cm
+            im1.drawWidth = secondStripScales[a % 12] * cm
             im_list1.append(im1)
             
             num_list1.append(str(a + 6))

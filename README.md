@@ -31,11 +31,12 @@ pip install reportlab==3.2.0
 
 ## Running the Script
 
-Run the following:
+First, go into the script and configure your scaling factors. Set tagScale to a negative integer if you wish to size each tag independently.
+Then, run the following:
 
 ./maketags.sh <list of link numbers>
 
-Alternatively, the script is run using:
+Alternatively, the script can be run using:
 
 python atagmain.py -i <input file> -l <list of link numbers>
 
@@ -43,6 +44,6 @@ The flag -i is followed by the name of the input file to be read.
 The input file used to generate tags should always be tags36h11_big, as the scaling factors used in atagmain.py were based on the image dimensions in tags36h11_big. 
 The flag -l is a list of links that April Tag strips will be generated for. For example, the command line statement 
 
-python atagmain.py -i tags36h11_big -l 0 1
+python atagmain.py -i tags36h11_big_cropped_flipped -l 0 1
 
 Will produce four strips total, the first two for link zero, and the last two for link one.
