@@ -27,7 +27,6 @@ git clone https://github.com/GitWyd/RM_AprilTagLayoutGen.git
 Make sure the reportlab tool is also downloaded using:
 ```
 pip install reportlab==3.2.0
-pdf2image-1.16.0
 ```
 
 ## Running the Script
