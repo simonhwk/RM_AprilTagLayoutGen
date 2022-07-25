@@ -47,3 +47,14 @@ The flag -l is a list of links that April Tag strips will be generated for. For 
 python atagmain.py -i tags36h11_big_cropped_flipped -l 0 1
 
 Will produce four strips total, the first two for link zero, and the last two for link one.
+
+## Detect Apriltags from images or pdf files
+The script `detect_apriltags.py` can be used to detect the apriltags in an image or a multi-page pdf file. `--verbose` draws bounding boxes and ids of detected tags on the images.
+
+**Additional packages required**
+`apriltag`, `opencv-python`, `numpy`, `pdf2image`
+
+**Usage**
+```
+python detect_apriltags.py <FILENAME> --verbose
+```
