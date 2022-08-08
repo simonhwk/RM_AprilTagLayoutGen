@@ -8,11 +8,14 @@ Created on Tue Nov  9 22:19:31 2021
 import sys
 import os
 import argparse
+import cv2
+import numpy as np
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4, LETTER
 from reportlab.pdfgen.canvas import Canvas
 from reportlab.platypus import Table, TableStyle, Image
 from reportlab.lib.units import cm
+import matplotlib.pyplot as plt
 
 def main(argv):
     #Opens AprilTag File
@@ -32,7 +35,7 @@ def main(argv):
     #print(image_list[:20])
     
     canvas = Canvas('tags.pdf', pagesize = LETTER, bottomup=0)
-    
+    #canvas.scale(1, -1)
     im_list0 = []
     num_list0 = []
     tag_data0 = []
@@ -48,11 +51,11 @@ def main(argv):
     rowH = 55
     
     ######## CHANGE THIS TO ALTER TAG SCALE ########
-    
+    #tagScale = 1.8
     tagScale = -1 # Universal (uniform) scaling. Set it to any negative integer to size each tag independently below.
     
-    firstStripScales = [1, 1.5, 1.8, 1, 1.5, 1.8]
-    secondStripScales = [1.8, 1.5, 1, 1.8, 1.5, 1]
+    firstStripScales = [1.8, 1.75, 1.75, 1.75, 1.75, 1.75]
+    secondStripScales = [1.75, 1.75, 1.75, 1.8, 1.75, 1.75]
     
     ################################################
     
@@ -66,6 +69,7 @@ def main(argv):
     
     # Generate output PDF
     tag_counter = 0
+    print(linklist)
     for i in linklist:
         #Clear im_list0, num_list0, and tag_data0
         im_list0.clear()
@@ -77,16 +81,27 @@ def main(argv):
         num_list1.clear()
         tag_data1.clear()
         for a in range(12 * i, 12 * i + 6):
+            print('a: ', a)
             #Create list of images and numbers for first strip
-            im0 = Image(os.path.join(tagfolder, image_list[a]))
+            im0_num = str(a).rjust(5, '0')
+            im0_fname = f'tag36_11_{im0_num}_big.png'
+            print(im0_fname)
+            print(os.path.join(tagfolder, im0_fname))
+            im0 = Image(os.path.join(tagfolder, im0_fname))
+            #im = Imagee.open(os.path.join(tagfolder, im0_fname))
+            #im.show()
             im0.drawHeight = firstStripScales[a % 12] * cm
             im0.drawWidth = firstStripScales[a % 12] * cm
             im_list0.append(im0)
             
             num_list0.append(str(a))
             
+            im1_num = str(a+6).rjust(5, '0')
             #Create list of images and numbers for second strip
-            im1 = Image(os.path.join(tagfolder, image_list[a + 6]))
+            im1_fname = f'tag36_11_{im1_num}_big.png'
+            im1 = Image(os.path.join(tagfolder, im1_fname))
+            print(im1_fname)
+            print(os.path.join(tagfolder, im1_fname))
             im1.drawHeight = secondStripScales[a % 12] * cm
             im1.drawWidth = secondStripScales[a % 12] * cm
             im_list1.append(im1)
