@@ -46,6 +46,7 @@ print(f'total images: {len(images)}')
 print('detecting ...')
 for i in range(len(images)):
     print(f'----------------tags detected in image {i + 1}--------------')
+    #img = cv2.flip(images[i], -1)
     img = images[i]
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     detector = apriltag.Detector()
@@ -69,6 +70,13 @@ for i in range(len(images)):
             # draw the center (x, y)-coordinates of the AprilTag
             (cX, cY) = (int(r.center[0]), int(r.center[1]))
             cv2.circle(img, (cX, cY), params['circle_size'], (0, 0, 255), -1)
+            
+            #draw corner points
+            cv2.circle(img, (ptA[0], ptA[1]), params['circle_size'], (0, 0, 255), -1)
+            cv2.circle(img, (ptB[0], ptB[1]), params['circle_size'], (5, 185, 250), -1)
+            cv2.circle(img, (ptC[0], ptC[1]), params['circle_size'], (86, 245, 237), -1)
+            cv2.circle(img, (ptD[0], ptD[1]), params['circle_size'], (25, 144, 3), -1)
+            
             cv2.putText(img, str(r.tag_id), (cX+params['dx'], cY+params['dy']),cv2.FONT_HERSHEY_SIMPLEX, params['font_scale'], (255, 0, 0), params['font_thickness'])
             # draw the tag family on the image
             tagFamily = r.tag_family.decode("utf-8")
